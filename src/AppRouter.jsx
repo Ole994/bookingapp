@@ -7,14 +7,14 @@ import Dashboard from './pages/dashboard/Dashboard';
 import ErrorPage from './pages/error/Error';
 import Login from './pages/login/Login';
 import Logout from './pages/logout/Logout';
-import Nav from './pages/nav/Nav';
+import Navigation from './pages/nav/Nav';
 import Profile from './pages/profile/Profile';
 import Administration from './pages/administration/Administration';
 
 const AppRouter = () => {
   return (
     <Router>
-      <Nav />
+      <Navigation />
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/booking" element={<Booking />} />
