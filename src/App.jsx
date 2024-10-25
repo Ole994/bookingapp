@@ -1,29 +1,27 @@
-//pages and css
+// src/App.jsx
 import AppRouter from './AppRouter';
-import './pages/booking/booking.css';
-import './pages/calendar/calendar.css';
-import './pages/confirmation/confirmation.css';
-import './pages/dashboard/dashboard.css';
-import './pages/error/error.css';
-import './pages/login/login.css';
-import './pages/logout/logout.css';
-import './pages/nav/nav.css';
-import './pages/profile/profile.css';
-import './pages/administration/Administration.css';
-//other imports
- 'react-router-dom';
-
-
-
-//const
-
+import ErrorBoundary from './component/error/ErrorBoundary';
+import Navigation from "./pages/nav/Navigation";
+import "./css/main.css";
 
 const App = () => {
   return (
-    <>
-    <AppRouter />
-    </>
+    <ErrorBoundary> {/* Pakker App-komponentene med ErrorBoundary */}
+      <div>
+        
+        <Navigation /> {/* Navigasjonsbaren som håndterer innlogging */}
+        
+        {/* Rendre hovedrouting-komponenten */}
+        <AppRouter />
+      </div>
+    </ErrorBoundary>
   );
-}
+};
 
 export default App;
+
+
+
+
+
+

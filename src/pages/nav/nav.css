@@ -1,84 +1,78 @@
-/* App.css */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #f8f8f8;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .logo img {
-    height: 30px;
-  }
-  
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Gjør logoen større */
+.logo img {
+  height: 50px; /* Endre størrelsen på logoen her */
+  width: auto;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+}
+
+.auth-buttons button {
+  background-color: #0071e3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.auth-buttons button:hover {
+  background-color: #005bb5;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger .bar {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+}
+
+/* Responsiv styling */
+@media (max-width: 768px) {
   .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-  }
-  
-  .nav-links li a {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-  }
-  
-  .auth-buttons button {
-    background-color: #0071e3;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .auth-buttons button:hover {
-    background-color: #005bb5;
-  }
-  
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-  }
-  
-  .hamburger .bar {
-    width: 25px;
-    height: 3px;
-    background-color: #333;
-  }
-  
-  @media (max-width: 768px) {
-    .nav-links {
       position: absolute;
       top: 60px;
-      left: -100%;
+      left: -100%; /* Skjuler menyen til hamburgeren er trykket */
       flex-direction: column;
-        align-items: center;
-        justify-content: center;
+      align-items: center;
+      justify-content: center;
       background-color: #f8f8f8;
       width: 100%;
       transition: left 0.3s ease;
-    }
-  
-    .nav-links.open {
-      left: 0;
-    }
-  
-    .hamburger {
-      display: flex;
-    }
+      z-index: 9;
   }
-  
+
+  .nav-links.open {
+      left: 0; /* Viser menyen når "open"-klassen legges til */
+  }
+
+  .hamburger {
+      display: flex; 
+      z-index: 99; /* Viser hamburgeren på små skjermer */
+  }
+}

@@ -1,17 +1,19 @@
+// src/main.jsx
+// src/main.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
-import { AuthProvider } from './context/AuthContext.jsx'; // Riktig filtype for JSX
+import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext'; // Importer AuthProvider
 
 
-
-// Opprett en root for å koble React til HTML-filen
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+// Pakk appen med AuthProvider og BrowserRouter for kontekst og ruter
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* Pakk appen med AuthProvider for å gi tilgang til autentiseringskonteksten */}
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider> {/* Pakk App med AuthProvider for å dele autentisering */}
+        <App />
+      </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
