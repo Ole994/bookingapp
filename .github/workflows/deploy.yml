@@ -3,12 +3,12 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main # Bytt til riktig branch hvis du bruker noe annet
+      - main  # Endre til riktig branch hvis nødvendig
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -16,16 +16,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16' # Bruk riktig Node-versjon for prosjektet
+          node-version: '16'  # Bruk Node.js versjon 16, som er stabil
 
       - name: Install dependencies
-        run: npm run build
+        run: npm install
 
       - name: Build the project
-        run: vite build
+        run: npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./dist  # Standard output-mappe for Vite

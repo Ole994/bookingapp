@@ -7,6 +7,7 @@ export default defineConfig({
     target: 'esnext',
     minify: 'esbuild',
     sourcemap: false,
+    outDir: 'dist',
   },
   server: {
     hmr: {
