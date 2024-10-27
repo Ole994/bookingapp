@@ -1,0 +1,1 @@
+import{u as s,j as e}from"./index-xqDPF-6l.js";const t=()=>{const r=s(),i=()=>{r("/")};return e.jsxs("div",{className:"error-page",children:[e.jsx("h1",{children:"404 - Siden ble ikke funnet"}),e.jsx("p",{children:"Beklager, men siden du prøver å få tilgang til eksisterer ikke."}),e.jsx("button",{onClick:i,children:"Tilbake til Hjem"})]})};export{t as default};
