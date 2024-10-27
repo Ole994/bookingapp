@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react-swc';
 
 export default defineConfig({
   plugins: [react()],
-  // base: '/bookingapp/', // Sørg for å angi base-URL til repo-navnet ditt
+  base: '/bookingapp/', // Sørg for å angi base-URL til repo-navnet ditt
   build: {
     outDir: 'dist',
   },

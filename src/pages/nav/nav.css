@@ -6,11 +6,14 @@
   padding: 10px 20px;
   background-color: #f8f8f8;
   border-bottom: 1px solid #ddd;
+  width: 100%;
+  max-width: 100vw; /* Forhindrer at navbaren overstiger skjermbredden */
+  box-sizing: border-box; /* Sørger for at padding ikke utvider navbaren */
 }
 
 /* Logo Styling */
 .logo img {
-  height: 50px; /* Set an appropriate height for the logo */
+  height: 50px;
   width: auto;
 }
 
@@ -19,6 +22,8 @@
   list-style: none;
   display: flex;
   gap: 20px;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links li a {
@@ -44,7 +49,7 @@
 
 /* Hamburger Menu */
 .hamburger {
-  display: none; /* Hidden by default on larger screens */
+  display: none;
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
@@ -58,17 +63,20 @@
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-  /* Show Hamburger Menu */
+  .navbar {
+    padding: 10px; /* Reduserer padding for små skjermer */
+  }
+
   .hamburger {
     display: flex;
-    z-index: 99; /* Ensures hamburger icon stays on top */
+    z-index: 99;
   }
 
   /* Hide Desktop Links */
   .nav-links {
     position: absolute;
     top: 60px;
-    left: -100%; /* Hidden off-screen by default */
+    left: -100%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -77,35 +85,37 @@
     padding: 20px 0;
     transition: left 0.3s ease;
     z-index: 9;
+    box-sizing: border-box;
   }
 
   /* Display Mobile Links */
   .nav-links.open {
-    left: 0; /* Slides into view when "open" class is added */
+    left: 0;
   }
 
-  /* Responsive Link Styling */
   .nav-links li a {
-    font-size: 18px; /* Larger font for better readability on mobile */
+    font-size: 18px;
     padding: 10px;
     color: #333;
+    width: 100%;
+    text-align: center;
   }
 
-  /* Adjust Button Size */
   .auth-buttons button {
     padding: 10px 20px;
     font-size: 18px;
+    width: 100%;
   }
 }
 
 /* Ultra-Wide Screens */
 @media (min-width: 1200px) {
   .logo img {
-    height: 60px; /* Slightly larger logo */
+    height: 60px;
   }
 
   .nav-links li a {
-    font-size: 18px; /* Larger links for readability */
+    font-size: 18px;
   }
 
   .auth-buttons button {

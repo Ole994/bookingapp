@@ -15,34 +15,40 @@ const Navigation = () => {
     setMenuOpen(prevState => !prevState);
   };
 
+  // Lukker menyen når en lenke klikkes i mobilvisning
+  const handleLinkClick = () => {
+    if (window.innerWidth < 768) {
+      setMenuOpen(false);
+    }
+  };
+
   // Håndterer innlogging og omdirigering til Login-siden
   const handleLoginClick = () => {
     navigate('/login');
+    handleLinkClick(); // Lukker menyen på små skjermer
   };
 
   return (
     <nav className="navbar">
       <div className="logo">
-        <Link to="/">
+        <Link to="/" onClick={handleLinkClick}>
           <img src={runningLogo} alt="Running Logo" className="logo-img" />
         </Link>
       </div>
 
       <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/administration">Administrasjon</Link></li>
-        <li><Link to="/booking">Booking</Link></li>
-        <li><Link to="/calendar">Kalender</Link></li>
-        <li><Link to="/confirmation">Bekreftelse</Link></li>
-        <li><Link to="/dashboard">Dashboard</Link></li>
-        <li><Link to="/error">Error</Link></li>
-        <li><Link to="/signup">Sign up</Link></li>
-        <Link to="/deleteAccount">Delete Account</Link>
+        <li><Link to="/" onClick={handleLinkClick}>Home</Link></li>
+        <li><Link to="/administration" onClick={handleLinkClick}>Administrasjon</Link></li>
+        <li><Link to="/booking" onClick={handleLinkClick}>Booking</Link></li>
+        <li><Link to="/calendar" onClick={handleLinkClick}>Kalender</Link></li>
+        <li><Link to="/dashboard" onClick={handleLinkClick}>Dashboard</Link></li>
+        <li><Link to="/signup" onClick={handleLinkClick}>Sign up</Link></li>
+        <li><Link to="/deleteAccount" onClick={handleLinkClick}>Delete Account</Link></li>
       </ul>
 
       <div className="auth-buttons">
         {user ? (
-          <button onClick={logout}>Logout</button>
+          <button onClick={() => { logout(); handleLinkClick(); }}>Logout</button>
         ) : (
           <button onClick={handleLoginClick}>Login</button>
         )}
