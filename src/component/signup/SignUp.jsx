@@ -25,7 +25,7 @@ const SignUp = () => {
         console.log('User registered successfully');
       } catch (error) {
         console.error('Error signing up:', error.message);
-        setError(error.message); // Setter feilmeldingen
+        setError(error.message); // Setter feilmeldingen k
       }
     },
   });
