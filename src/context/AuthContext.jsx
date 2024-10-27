@@ -28,7 +28,7 @@
 //  får alle komponenter under App tilgang til user, login, og logout.
 // src/context/AuthContext.jsx
 // src/context/AuthContext.jsx
-import { createContext, useState } from 'react';
+import { createContext, useState, useContext } from 'react';
 import PropTypes from 'prop-types'; // Importer PropTypes
 
 export const AuthContext = createContext();
@@ -36,10 +36,12 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  // Innloggingsfunksjon
   const login = (userData) => {
     setUser(userData);
   };
 
+  // Utloggingsfunksjon
   const logout = () => {
     setUser(null);
   };
@@ -54,4 +56,9 @@ export const AuthProvider = ({ children }) => {
 // Legg til prop-types validering for children
 AuthProvider.propTypes = {
   children: PropTypes.node.isRequired, // Definerer at children er påkrevd
+};
+
+// Custom hook for å enklere hente ut autentiseringsdata
+export const useAuth = () => {
+  return useContext(AuthContext);
 };

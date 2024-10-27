@@ -37,6 +37,7 @@ const Navigation = () => {
         <li><Link to="/dashboard">Dashboard</Link></li>
         <li><Link to="/error">Error</Link></li>
         <li><Link to="/signup">Sign up</Link></li>
+        <Link to="/deleteAccount">Delete Account</Link>
       </ul>
 
       <div className="auth-buttons">

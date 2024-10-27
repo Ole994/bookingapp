@@ -1,6 +1,7 @@
 // src/AppRouter.jsx
 import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import ProtectedRoute from './component/ProtectedRoute/ProtectedRoute';
 
 const Booking = lazy(() => import('./pages/booking/Booking'));
 const Calendar = lazy(() => import('./pages/calendar/Calendar'));
@@ -13,6 +14,7 @@ const Profile = lazy(() => import('./pages/profile/Profile'));
 const Administration = lazy(() => import('./pages/administration/Administration'));
 const Home = lazy(() => import('./pages/home/Home'));
 const SignUp = lazy(() => import('./component/signup/SignUp'));
+const DeleteAccount = lazy(() => import('./component/deleteAccount/DeleteAccount'));
 
 const AppRouter = () => {
   return (
@@ -26,9 +28,20 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/administration" element={<Administration />} />
+        
+        {/* Protected Administration route */}
+        <Route
+          path="/administration"
+          element={
+            <ProtectedRoute>
+              <Administration />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="*" element={<ErrorPage />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/deleteAccount" element={<DeleteAccount />} />
       </Routes>
     </Suspense>
   );
