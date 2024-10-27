@@ -1,0 +1,1 @@
+import{j as i}from"./index-D505blzw.js";const s=()=>i.jsxs("div",{children:[i.jsx("h2",{children:"Administration Page"}),i.jsx("p",{children:"Welcome to the administration area. You are successfully logged in!"})]});export{s as default};
