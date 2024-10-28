@@ -4,6 +4,9 @@ import react from '@vitejs/plugin-react-swc';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { VitePWA } from 'vite-plugin-pwa';
 
+// Bruker import.meta.env.MODE for å bestemme miljøet i Vite
+const base = import.meta.env.MODE === 'production' ? '/bookingapp/' : '/';
+
 export default defineConfig({
   plugins: [
     react(),
@@ -30,7 +33,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/', 
+  base, // Dynamisk base-URL
   build: {
     outDir: 'dist',
     rollupOptions: {
@@ -58,4 +61,3 @@ export default defineConfig({
     ]
   }
 });
-
