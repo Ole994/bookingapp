@@ -4,7 +4,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import '../login/Login.css';
+import '../../component/login/login.css';
 
 const Login = () => {
   const { login } = useContext(AuthContext);

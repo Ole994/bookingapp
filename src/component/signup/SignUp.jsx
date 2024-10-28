@@ -27,7 +27,13 @@ const SignUp = () => {
         console.log('User registered successfully');
       } catch (error) {
         console.error('Error signing up:', error.message);
-        setError(error.message);
+        
+        // Tilpasset feilhåndtering for eksisterende e-post
+        if (error.code === 'auth/email-already-in-use') {
+          setError('This email is already in use. Try logging in.');
+        } else {
+          setError(error.message);
+        }
       }
     },
   });
@@ -37,6 +43,7 @@ const SignUp = () => {
       <div className="signup-box">
         <h2>Create Account</h2>
 
+        {/* Viser tilpassede feilmeldinger */}
         {error && <p className="message error">{error}</p>}
         {success && <p className="message success">{success}</p>}
 
@@ -94,6 +101,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-
 

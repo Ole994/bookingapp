@@ -32,7 +32,7 @@ const Navigation = () => {
     <nav className="navbar">
       <div className="logo">
         <Link to="/" onClick={handleLinkClick}>
-          <img src={runningLogo} alt="Running Logo" className="logo-img" />
+          <img src={runningLogo} alt="Running Logo" loading="lazy" className="logo-img" />
         </Link>
       </div>
 

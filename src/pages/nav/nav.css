@@ -1,4 +1,4 @@
-/* Main Navbar Styling */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -7,8 +7,8 @@
   background-color: #f8f8f8;
   border-bottom: 1px solid #ddd;
   width: 100%;
-  max-width: 100vw; /* Forhindrer at navbaren overstiger skjermbredden */
-  box-sizing: border-box; /* Sørger for at padding ikke utvider navbaren */
+  max-width: 100vw; 
+  box-sizing: border-box; 
 }
 
 /* Logo Styling */
