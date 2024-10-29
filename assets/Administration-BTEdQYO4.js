@@ -1,1 +1,0 @@
-import{j as i}from"./react-DMqFHgMx.js";import"./hoist-non-react-statics-Dlr-usKs.js";import"./react-is-8JwjhRSi.js";const s=()=>i.jsxs("div",{children:[i.jsx("h2",{children:"Administration Page"}),i.jsx("p",{children:"Welcome to the administration area. You are successfully logged in!"})]});export{s as default};
