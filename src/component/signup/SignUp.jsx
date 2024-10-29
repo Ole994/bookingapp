@@ -1,8 +1,11 @@
+// src/component/signup/SignUp.jsx
 import { useState } from 'react';
 import { auth, firestore } from '../../firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, addDoc } from 'firebase/firestore';
-import { signUpSchema } from '../../assets/validationSchema'; // Importer Yup-skjemaet
+import { signUpSchema } from '../../assets/validationSchema';
+import CityAutocomplete from './CityAutoComplete';
+import CountryAutocomplete from './CountryAutoComplete';
 import '../signup/signup.css';
 
 const SignUp = () => {
@@ -13,6 +16,7 @@ const SignUp = () => {
     postalCode: '',
     postalPlace: '',
     city: '',
+    country: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -22,26 +26,47 @@ const SignUp = () => {
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
 
+  // Funksjon for å håndtere input-endringer
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Håndtering av valgt by fra CityAutocomplete
+  const handleCitySelect = (selectedCity) => {
+    console.log("Selected city:", selectedCity); // Logging for feilsøking
+    setFormData((prevData) => ({
+      ...prevData,
+      city: selectedCity,
+    }));
+  };
+
+  // Håndtering av valgt land fra CountryAutocomplete
+  const handleCountrySelect = (selectedCountry) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      country: selectedCountry,
+    }));
+  };
+
+  // Funksjon for innsending av skjema
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
     setError(null);
     setSuccess(null);
 
-    // Validering med Yup
+    console.log("Form data before validation:", formData); // Logging for feilsøking
+
     try {
+      // Validering med Yup
       await signUpSchema.validate(formData, { abortEarly: false });
       
-      // Opprett bruker med e-post og passord i Firebase Authentication
+      // Opprett bruker i Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       const user = userCredential.user;
 
-      // Lagre ekstra informasjon i Firestore
+      // Lagre brukerdata i Firestore
       await addDoc(collection(firestore, 'users'), {
         uid: user.uid,
         name: formData.name,
@@ -51,9 +76,11 @@ const SignUp = () => {
         postalCode: formData.postalCode,
         postalPlace: formData.postalPlace,
         city: formData.city,
+        country: formData.country,
       });
 
       setSuccess('User registered successfully!');
+      // Tilbakestill formData etter vellykket registrering
       setFormData({
         name: '',
         phone: '',
@@ -61,11 +88,13 @@ const SignUp = () => {
         postalCode: '',
         postalPlace: '',
         city: '',
+        country: '',
         email: '',
         password: '',
         confirmPassword: '',
       });
     } catch (err) {
+      // Håndter valideringsfeil fra Yup
       if (err.name === 'ValidationError') {
         const validationErrors = {};
         err.inner.forEach((error) => {
@@ -149,15 +178,13 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
-            <input
-              type="text"
-              placeholder="City"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              required
-            />
+            <CityAutocomplete onCitySelect={handleCitySelect} />
             {errors.city && <div className="input-error">{errors.city}</div>}
+          </div>
+
+          <div className="input-group">
+            <CountryAutocomplete onCountrySelect={handleCountrySelect} />
+            {errors.country && <div className="input-error">{errors.country}</div>}
           </div>
 
           <div className="input-group">
@@ -204,5 +231,8 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+
+
 
 
