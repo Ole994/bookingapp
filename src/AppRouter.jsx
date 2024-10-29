@@ -34,17 +34,21 @@ const AppRouter = () => {
           path="/administration"
           element={
             <ProtectedRoute>
+              {console.log("Attempting to access /administration")}
               <Administration />
             </ProtectedRoute>
           }
         />
 
-        <Route path="*" element={<ErrorPage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/deleteAccount" element={<DeleteAccount />} />
+        
+        {/* Catch-all route for unknown paths */}
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Suspense>
   );
 };
 
 export default AppRouter;
+

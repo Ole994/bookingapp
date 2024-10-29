@@ -1,5 +1,4 @@
-// src/pages/login/Login.jsx
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebaseConfig';
@@ -7,35 +6,46 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import '../../component/login/login.css';
 
 const Login = () => {
-  const { login } = useContext(AuthContext);
+  const { user, login } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const userData = { email, name: 'Test User' };
-    login(userData);
-    navigate('/');
-  };
+  // Hvis brukeren allerede er logget inn, send dem til hjemmesiden
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   const handleFirebaseLogin = async (e) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+    setLoading(true);
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       login({ email: user.email, name: user.displayName || 'Firebase User' });
       setSuccess("Innlogging var vellykket!");
-      setTimeout(() => navigate('/'), 2000);
+      navigate('/'); // Naviger umiddelbart
     } catch (err) {
       console.error('Error logging in with Firebase:', err.message);
       setError("Kunne ikke logge inn. Vennligst sjekk e-post og passord og prøv igjen.");
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleTestLogin = (e) => {
+    e.preventDefault();
+    const userData = { email, name: 'Test User' };
+    login(userData);
+    navigate('/');
   };
 
   return (
@@ -55,6 +65,7 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={loading} // Deaktivert under innlasting
             />
           </div>
           <div className="input-group">
@@ -65,16 +76,19 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              disabled={loading} // Deaktivert under innlasting
             />
           </div>
-          <button type="submit" className="primary-button">Logg inn</button>
+          <button type="submit" className="primary-button" disabled={loading}>
+            {loading ? "Logger inn..." : "Logg inn"}
+          </button>
         </form>
 
         <div className="separator">eller</div>
 
-        <form onSubmit={handleSubmit} className="login-form">
-          <button type="submit" className="secondary-button">Logg inn med testbruker</button>
-        </form>
+        <button onClick={handleTestLogin} className="secondary-button">
+          Logg inn med testbruker
+        </button>
       </div>
     </div>
   );

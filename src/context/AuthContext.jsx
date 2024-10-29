@@ -28,8 +28,11 @@
 //  får alle komponenter under App tilgang til user, login, og logout.
 // src/context/AuthContext.jsx
 // src/context/AuthContext.jsx
-import { createContext, useState, useContext } from 'react';
+// src/context/AuthContext.jsx
+import { createContext, useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types'; // Importer PropTypes
+import { auth } from '../firebaseConfig'; // Importer Firebase-authentisering
+import { onAuthStateChanged, setPersistence, browserLocalPersistence } from 'firebase/auth';
 
 export const AuthContext = createContext();
 
@@ -45,6 +48,27 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
   };
+
+  // Sett opp vedvarende pålogging og lyt etter endringer i autentiseringstilstand
+  useEffect(() => {
+    // Sett vedvarende sesjon til localStorage
+    setPersistence(auth, browserLocalPersistence)
+      .then(() => {
+        // Overvåk autentiseringstilstanden
+        onAuthStateChanged(auth, (firebaseUser) => {
+          if (firebaseUser) {
+            // Bruker er innlogget, sett brukerdata
+            setUser({ email: firebaseUser.email, name: firebaseUser.displayName || 'Firebase User' });
+          } else {
+            // Ingen bruker er innlogget
+            setUser(null);
+          }
+        });
+      })
+      .catch((error) => {
+        console.error('Error setting persistence:', error);
+      });
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>

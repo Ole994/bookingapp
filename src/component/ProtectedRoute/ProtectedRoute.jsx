@@ -6,11 +6,16 @@ import PropTypes from 'prop-types';
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
 
+  // Log brukertilstanden for feilsøking
+  console.log("ProtectedRoute: Current user =", user);
+
   if (!user) {
+    console.log("ProtectedRoute: User not authenticated, redirecting to login.");
     // Hvis brukeren ikke er logget inn, send dem til login-siden
     return <Navigate to="/login" replace />;
   }
 
+  console.log("ProtectedRoute: User authenticated, rendering children.");
   // Hvis brukeren er logget inn, returner komponentene (children)
   return children;
 };
