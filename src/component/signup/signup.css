@@ -1,134 +1,131 @@
-
-
-
 .signup-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding: 1rem;
-    background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
-    color: #f0f0f0;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Gjør at siden kan rulle hvis innholdet er for langt */
+  padding: 2rem;
+  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  color: #f0f0f0;
+}
+
+.signup-box {
+  width: 100%; /* Fyller 90% av skjermbredden på alle enheter */
+
+  padding: 2rem;
+  background-color: #2c2c2c;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  margin: auto; /* Sentraliserer boksen */
+}
+
+.signup-box h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #f0f0f0;
+}
+
+.signup-form .input-group {
+  margin-bottom: 1.2rem;
+}
+
+.signup-form input {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  color: #f0f0f0;
+  background-color: #3a3a3a;
+  border: 1px solid #555;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.signup-form input:focus {
+  border-color: #00aaff;
+  outline: none;
+}
+
+.input-error {
+  color: #ff4d4d;
+  font-size: 0.85rem;
+  text-align: left;
+  margin-top: 0.5rem;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #00aaff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.submit-button:hover {
+  background-color: #008fcc;
+}
+
+.message {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.error {
+  background-color: #ff4d4d;
+  color: #ffffff;
+}
+
+.success {
+  background-color: #4caf50;
+  color: #ffffff;
+}
+
+/* Nettbrett */
+@media (max-width: 768px) {
   .signup-box {
-    width: 100%;
-    max-width: 400px;
-    padding: 2rem;
-    background-color: #2c2c2c;
-    border-radius: 8px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    text-align: center;
+    padding: 1.5rem;
   }
 
   .signup-box h2 {
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-    color: #f0f0f0;
-  }
-  
- 
-  .signup-form .input-group {
-    margin-bottom: 1.2rem;
-  }
-  
-  .signup-form input {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 1rem;
-    color: #f0f0f0;
-    background-color: #3a3a3a;
-    border: 1px solid #555;
-    border-radius: 4px;
-    transition: border-color 0.3s ease;
-  }
-  
-  .signup-form input:focus {
-    border-color: #00aaff;
-    outline: none;
-  }
-  
-  .input-error {
-    color: #ff4d4d;
-    font-size: 0.85rem;
-    text-align: left;
-    margin-top: 0.5rem;
-  }
-  
- 
-  .submit-button {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: #00aaff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 1rem;
-  }
-  
-  .submit-button:hover {
-    background-color: #008fcc;
+    font-size: 1.5rem;
   }
 
-  .message {
+  .signup-form input {
+    padding: 0.6rem;
     font-size: 0.9rem;
-    margin-bottom: 1rem;
+  }
+
+  .submit-button {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobil */
+@media (max-width: 480px) {
+  .signup-box {
+    padding: 1rem;
+  }
+
+  .signup-box h2 {
+    font-size: 1.3rem;
+  }
+
+  .signup-form input {
     padding: 0.5rem;
-    border-radius: 4px;
+    font-size: 0.85rem;
   }
-  
-  .error {
-    background-color: #ff4d4d;
-    color: #ffffff;
+
+  .submit-button {
+    padding: 0.5rem;
+    font-size: 0.85rem;
   }
-  
-  .success {
-    background-color: #4caf50;
-    color: #ffffff;
-  }
-  
- 
-  @media (max-width: 768px) {
-    .signup-box {
-      padding: 1.5rem;
-    }
-  
-    .signup-box h2 {
-      font-size: 1.5rem;
-    }
-  
-    .signup-form input {
-      padding: 0.6rem;
-      font-size: 0.9rem;
-    }
-  
-    .submit-button {
-      padding: 0.6rem;
-      font-size: 0.9rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .signup-box {
-      padding: 1rem;
-    }
-  
-    .signup-box h2 {
-      font-size: 1.3rem;
-    }
-  
-    .signup-form input {
-      padding: 0.5rem;
-      font-size: 0.85rem;
-    }
-  
-    .submit-button {
-      padding: 0.5rem;
-      font-size: 0.85rem;
-    }
-  }
-    
+}
+
