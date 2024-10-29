@@ -1,14 +1,16 @@
 // src/component/signup/SignUp.jsx
 import { useState } from 'react';
 import { auth, firestore } from '../../firebaseConfig';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { collection, addDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 import { signUpSchema } from '../../assets/validationSchema';
 import CityAutocomplete from './CityAutoComplete';
 import CountryAutocomplete from './CountryAutoComplete';
 import '../signup/signup.css';
 
 const SignUp = () => {
+  const navigate = useNavigate();  // Initialize useNavigate for redirection
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -26,22 +28,21 @@ const SignUp = () => {
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
 
-  // Funksjon for å håndtere input-endringer
+  // Function to handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Håndtering av valgt by fra CityAutocomplete
+  // Handle city selection
   const handleCitySelect = (selectedCity) => {
-    console.log("Selected city:", selectedCity); // Logging for feilsøking
     setFormData((prevData) => ({
       ...prevData,
       city: selectedCity,
     }));
   };
 
-  // Håndtering av valgt land fra CountryAutocomplete
+  // Handle country selection
   const handleCountrySelect = (selectedCountry) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -49,24 +50,22 @@ const SignUp = () => {
     }));
   };
 
-  // Funksjon for innsending av skjema
+  // Function for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
     setError(null);
     setSuccess(null);
 
-    console.log("Form data before validation:", formData); // Logging for feilsøking
-
     try {
-      // Validering med Yup
+      // Validate with Yup
       await signUpSchema.validate(formData, { abortEarly: false });
       
-      // Opprett bruker i Firebase Authentication
+      // Register user with Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       const user = userCredential.user;
 
-      // Lagre brukerdata i Firestore
+      // Save user data in Firestore
       await addDoc(collection(firestore, 'users'), {
         uid: user.uid,
         name: formData.name,
@@ -80,21 +79,14 @@ const SignUp = () => {
       });
 
       setSuccess('User registered successfully!');
-      // Tilbakestill formData etter vellykket registrering
-      setFormData({
-        name: '',
-        phone: '',
-        address: '',
-        postalCode: '',
-        postalPlace: '',
-        city: '',
-        country: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      });
+
+      // Automatically log the user in
+      await signInWithEmailAndPassword(auth, formData.email, formData.password);
+
+      // Redirect to dashboard after successful login
+      navigate('/dashboard');
+      
     } catch (err) {
-      // Håndter valideringsfeil fra Yup
       if (err.name === 'ValidationError') {
         const validationErrors = {};
         err.inner.forEach((error) => {
@@ -231,6 +223,7 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
 
 
 
