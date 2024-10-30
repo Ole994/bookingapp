@@ -3,6 +3,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getAnalytics } from 'firebase/analytics';
+import { getStorage } from 'firebase/storage'; // Importer getStorage fra Firebase
 
 // Firebase-konfigurasjon
 const firebaseConfig = {
@@ -18,7 +19,7 @@ const firebaseConfig = {
 // Funksjon for å logge Firebase-feil
 const logError = (error) => {
   console.error("Firebase Error:", error.message);
-  // Du kan også utvide denne funksjonen for å logge til et eksternt verktøy, som Sentry eller LogRocket
+  // Her kan du utvide for å logge til et eksternt verktøy, som Sentry eller LogRocket
 };
 
 // Initialiser Firebase-appen med feilhåndtering
@@ -45,6 +46,14 @@ try {
   logError(error);
 }
 
+// Initialiser Firebase Storage og fang opp eventuelle feil
+let storage;
+try {
+  storage = getStorage(app);
+} catch (error) {
+  logError(error);
+}
+
 // Initialiser Analytics og fang opp eventuelle feil
 let analytics;
 try {
@@ -53,4 +62,6 @@ try {
   logError(error);
 }
 
-export { firestore, auth, analytics };
+// Eksporter alle nødvendige objekter
+export { firestore, auth, storage, analytics };
+

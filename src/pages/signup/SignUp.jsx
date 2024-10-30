@@ -5,12 +5,16 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 import { collection, addDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { signUpSchema } from '../../assets/validationSchema';
-import CityAutocomplete from './CityAutoComplete';
-import CountryAutocomplete from './CountryAutoComplete';
-import '../signup/signup.css';
+import CityAutocomplete from '../../component/AutoComplete/CityAutoComplete';
+import CountryAutocomplete from '../../component/AutoComplete/CountryAutoComplete';
+import {   storage } from '../../firebaseConfig';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+
+
+import './signup.css';
 
 const SignUp = () => {
-  const navigate = useNavigate();  // Initialize useNavigate for redirection
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -23,18 +27,22 @@ const SignUp = () => {
     password: '',
     confirmPassword: '',
   });
-
+  const [profileImage, setProfileImage] = useState(null);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
 
-  // Function to handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle city selection
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setProfileImage(e.target.files[0]);
+    }
+  };
+
   const handleCitySelect = (selectedCity) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -42,7 +50,6 @@ const SignUp = () => {
     }));
   };
 
-  // Handle country selection
   const handleCountrySelect = (selectedCountry) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -50,7 +57,6 @@ const SignUp = () => {
     }));
   };
 
-  // Function for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
@@ -58,14 +64,18 @@ const SignUp = () => {
     setSuccess(null);
 
     try {
-      // Validate with Yup
       await signUpSchema.validate(formData, { abortEarly: false });
-      
-      // Register user with Firebase Authentication
+
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       const user = userCredential.user;
 
-      // Save user data in Firestore
+      let profileImageUrl = '';
+      if (profileImage) {
+        const imageRef = ref(storage, `profileImages/${user.uid}`);
+        await uploadBytes(imageRef, profileImage);
+        profileImageUrl = await getDownloadURL(imageRef);
+      }
+
       await addDoc(collection(firestore, 'users'), {
         uid: user.uid,
         name: formData.name,
@@ -76,14 +86,13 @@ const SignUp = () => {
         postalPlace: formData.postalPlace,
         city: formData.city,
         country: formData.country,
+        profileImage: profileImageUrl,
       });
 
       setSuccess('User registered successfully!');
 
-      // Automatically log the user in
       await signInWithEmailAndPassword(auth, formData.email, formData.password);
 
-      // Redirect to dashboard after successful login
       navigate('/dashboard');
       
     } catch (err) {
@@ -215,6 +224,18 @@ const SignUp = () => {
             {errors.confirmPassword && <div className="input-error">{errors.confirmPassword}</div>}
           </div>
 
+          <div className="input-group">
+            <label htmlFor="profileImage" className="file-label">
+              Profile Image (optional):
+            </label>
+            <input
+              type="file"
+              id="profileImage"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+          </div>
+
           <button type="submit" className="submit-button">Sign Up</button>
         </form>
       </div>
@@ -223,9 +244,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-
-
-
-
-

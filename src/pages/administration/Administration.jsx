@@ -1,6 +1,8 @@
+// src/pages/Administration/Administration.jsx
 import { useEffect, useState } from 'react';
 import { firestore } from '../../firebaseConfig';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import './Administration.css';
 
 const Administration = () => {
   const [users, setUsers] = useState([]);
@@ -41,17 +43,51 @@ const Administration = () => {
   }
 
   return (
-    <div>
+    <div className="administration-page">
       <h2>User Management</h2>
       {users.length > 0 ? (
-        <ul>
-          {users.map((user) => (
-            <li key={user.id}>
-              {user.name} - {user.email}
-              <button onClick={() => handleDelete(user.id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
+        <table className="user-table">
+          <thead>
+            <tr>
+              <th>Profile Image</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Postal Code</th>
+              <th>Postal Place</th>
+              <th>City</th>
+              <th>Country</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.id}>
+                <td>
+                  {user.profileImage ? (
+                    <img src={user.profileImage} alt="Profile" width="50" height="50" />
+                  ) : (
+                    'No Image'
+                  )}
+                </td>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.phone}</td>
+                <td>{user.address}</td>
+                <td>{user.postalCode}</td>
+                <td>{user.postalPlace}</td>
+                <td>{user.city}</td>
+                <td>{user.country}</td>
+                <td>
+                  <button onClick={() => handleDelete(user.id)} className="delete-button">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       ) : (
         <p>No users found.</p>
       )}
@@ -60,4 +96,3 @@ const Administration = () => {
 };
 
 export default Administration;
-

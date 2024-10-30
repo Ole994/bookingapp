@@ -13,7 +13,7 @@ const Logout = lazy(() => import('./pages/logout/Logout'));
 const Profile = lazy(() => import('./pages/profile/Profile'));
 const Administration = lazy(() => import('./pages/administration/Administration'));
 const Home = lazy(() => import('./pages/home/Home'));
-const SignUp = lazy(() => import('./component/signup/SignUp'));
+const SignUp = lazy(() => import('./pages/signup/SignUp'));
 const DeleteAccount = lazy(() => import('./component/deleteAccount/DeleteAccount'));
 
 const AppRouter = () => {
