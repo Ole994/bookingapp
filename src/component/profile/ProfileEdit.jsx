@@ -1,33 +1,39 @@
-import { useEffect, useState } from 'react';
-import { storage } from '../../utils/firebaseConfig'; 
+// src/component/profile/ProfileImageUpload.jsx
+import { useState, useEffect } from 'react';
+import { storage } from '../../utils/firebaseConfig';
 import { ref, getDownloadURL } from 'firebase/storage';
 import useAuth from '../../hooks/useAuth';
 import PropTypes from 'prop-types';
 
 const ProfileImageUpload = ({ profileImageUrl, setProfileImageUrl }) => {
-  const { currentUser } = useAuth(); 
+  const { currentUser } = useAuth();
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchImageUrl = async () => {
       if (currentUser) {
+        const imageRef = ref(storage, `profileImages/${currentUser.uid}`);
         try {
-          const imageRef = ref(storage, `profileImages/${currentUser.uid}`);
           const url = await getDownloadURL(imageRef);
-          setProfileImageUrl(url); // Oppdaterer forelderen med den nye URL-en
+          setProfileImageUrl(url);
         } catch (err) {
           console.error("Error fetching image URL:", err);
-          setError('Failed to fetch image URL.'); // Setter feilmelding
+          setError('Failed to load image.');
         }
       }
     };
+
     fetchImageUrl();
   }, [currentUser, setProfileImageUrl]);
 
   return (
     <div>
       {profileImageUrl ? (
-        <img src={profileImageUrl} alt="Profile" style={{ width: '100px', height: '100px' }} />
+        <img
+          src={profileImageUrl}
+          alt="Profile"
+          style={{ width: '100px', height: '100px', borderRadius: '50%' }}
+        />
       ) : (
         <p>No profile image found.</p>
       )}
@@ -36,23 +42,13 @@ const ProfileImageUpload = ({ profileImageUrl, setProfileImageUrl }) => {
   );
 };
 
-// Definerer PropTypes for validering
+// PropTypes validation
 ProfileImageUpload.propTypes = {
-  profileImageUrl: PropTypes.string, // Gjør dette valgfritt
-  setProfileImageUrl: PropTypes.func, // Gjør også dette valgfritt
+  profileImageUrl: PropTypes.string.isRequired,
+  setProfileImageUrl: PropTypes.func.isRequired,
 };
 
 export default ProfileImageUpload;
-
-
-
-
-
-
-
-
-
-
 
 
 
