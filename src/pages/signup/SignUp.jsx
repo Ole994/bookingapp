@@ -1,16 +1,13 @@
 // src/component/signup/SignUp.jsx
 import { useState } from 'react';
-import { auth, firestore } from '../../firebaseConfig';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { collection, addDoc } from 'firebase/firestore';
+import { auth, firestore, storage } from '../../utils/firebaseConfig'; // Importer nødvendige moduler
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore'; // Importer setDoc for å oppdatere dokumenter
 import { useNavigate } from 'react-router-dom';
 import { signUpSchema } from '../../assets/validationSchema';
 import CityAutocomplete from '../../component/AutoComplete/CityAutoComplete';
 import CountryAutocomplete from '../../component/AutoComplete/CountryAutoComplete';
-import {   storage } from '../../firebaseConfig';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-
-
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'; // Importer for opplasting av bilder
 import './signup.css';
 
 const SignUp = () => {
@@ -66,17 +63,20 @@ const SignUp = () => {
     try {
       await signUpSchema.validate(formData, { abortEarly: false });
 
+      // Opprett bruker med Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       const user = userCredential.user;
 
       let profileImageUrl = '';
+      // Last opp profilbilde hvis det er valgt
       if (profileImage) {
         const imageRef = ref(storage, `profileImages/${user.uid}`);
         await uploadBytes(imageRef, profileImage);
-        profileImageUrl = await getDownloadURL(imageRef);
+        profileImageUrl = await getDownloadURL(imageRef); // Hent URL for det opplastede bildet
       }
 
-      await addDoc(collection(firestore, 'users'), {
+      // Opprett eller oppdater dokumentet for brukeren i Firestore
+      await setDoc(doc(firestore, 'users', user.uid), {
         uid: user.uid,
         name: formData.name,
         email: formData.email,
@@ -86,14 +86,13 @@ const SignUp = () => {
         postalPlace: formData.postalPlace,
         city: formData.city,
         country: formData.country,
-        profileImage: profileImageUrl,
+        profileImage: profileImageUrl, // Lagre URL for profilbilde
       });
 
       setSuccess('User registered successfully!');
 
-      await signInWithEmailAndPassword(auth, formData.email, formData.password);
-
-      navigate('/dashboard');
+      // Naviger til profilen etter registrering
+      navigate('/profile');
       
     } catch (err) {
       if (err.name === 'ValidationError') {
@@ -244,3 +243,9 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+
+
+
+
+

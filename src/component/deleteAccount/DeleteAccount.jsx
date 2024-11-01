@@ -1,6 +1,6 @@
 // src/component/DeleteAccount.jsx
 import { useState, useContext } from 'react';
-import { auth } from '../../firebaseConfig';
+import { auth } from '../../utils/firebaseConfig';
 import { deleteUser, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext'; // Import AuthContext for å få tilgang til logout-funksjonen

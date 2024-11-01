@@ -44,6 +44,7 @@ const Navigation = () => {
         <li><Link to="/dashboard" onClick={handleLinkClick}>Dashboard</Link></li>
         <li><Link to="/signup" onClick={handleLinkClick}>Sign up</Link></li>
         <li><Link to="/deleteAccount" onClick={handleLinkClick}>Delete Account</Link></li>
+        <li><Link to="/profile" onClick={handleLinkClick}>profile</Link></li>
       </ul>
 
       <div className="auth-buttons">

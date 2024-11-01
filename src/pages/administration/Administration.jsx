@@ -1,6 +1,6 @@
 // src/pages/Administration/Administration.jsx
 import { useEffect, useState } from 'react';
-import { firestore } from '../../firebaseConfig';
+import { firestore } from '../../utils/firebaseConfig';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import './Administration.css';
 

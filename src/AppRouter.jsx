@@ -10,7 +10,7 @@ const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const ErrorPage = lazy(() => import('./pages/error/Error'));
 const Login = lazy(() => import('./component/login/Login'));
 const Logout = lazy(() => import('./pages/logout/Logout'));
-const Profile = lazy(() => import('./pages/profile/Profile'));
+const Profile = lazy(() => import('./component/profile/Profile'));
 const Administration = lazy(() => import('./pages/administration/Administration'));
 const Home = lazy(() => import('./pages/home/Home'));
 const SignUp = lazy(() => import('./pages/signup/SignUp'));

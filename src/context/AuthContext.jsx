@@ -31,7 +31,7 @@
 // src/context/AuthContext.jsx
 import { createContext, useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types'; // Importer PropTypes
-import { auth } from '../firebaseConfig'; // Importer Firebase-authentisering
+import { auth } from '../utils/firebaseConfig'; // Importer Firebase-authentisering
 import { onAuthStateChanged, setPersistence, browserLocalPersistence } from 'firebase/auth';
 
 export const AuthContext = createContext();
