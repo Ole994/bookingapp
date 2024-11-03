@@ -1,62 +1,78 @@
-.profile-edit-container {
-  padding: 20px;
-  max-width: 600px;
-  margin: auto;
-  background: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Profile.css */
+
+/* Generelle stiler for hele profilen */
+.profile-container {
+  display: flex;
+  flex-direction: row; /* Standard layout for større skjermer */
+  height: 100vh; /* Fyll hele høyden på vinduet */
 }
 
+.sidebar {
+  width: 200px; /* Fast bredde for sidebar */
+  border-right: 1px solid #ccc; /* Høyre kantlinje for sidebar */
+  padding: 20px; /* Polstring for sidebar */
+  background-color: #f9f9f9; /* Bakgrunnsfarge for sidebar */
+  flex-shrink: 0; /* Forhindre at sidebar krymper */
+}
+
+.sidebar-button {
+  display: flex; /* Fleksibel layout for knapper */
+  align-items: center; /* Vertikalt sentrert innhold */
+  border: none; /* Ingen kantlinje */
+  background: none; /* Ingen bakgrunn */
+  cursor: pointer; /* Vis cursor som hånd */
+  margin: 10px 0; /* Margin mellom knapper */
+  color: #333; /* Tekstfarge */
+  font-size: 16px; /* Størrelse på tekst */
+}
+
+.sidebar-icon {
+  margin-right: 8px; /* Margin mellom ikon og tekst */
+}
+
+.content-container {
+  flex: 1; /* Fyll tilgjengelig plass */
+  display: flex; /* Fleksibel layout */
+  justify-content: center; /* Sentrere innhold horisontalt */
+  align-items: center; /* Sentrere innhold vertikalt */
+  text-align: center; /* Sentrere tekst */
+  padding: 20px; /* Polstring rundt innhold */
+  background-color: #ffffff; /* Bakgrunnsfarge for innhold */
+}
+
+.profile-details {
+  max-width: 600px; /* Maksimal bredde for profilinnhold */
+  width: 100%; /* Fyll tilgjengelig plass */
+}
+
+/* Styling for profilbildet */
+.profile-image {
+  width: 100px; /* Bredde på profilbilde */
+  height: 100px; /* Høyde på profilbilde */
+  border-radius: 50%; /* Rundt profilbilde */
+  margin-top: 10px; /* Margin over bildet */
+}
+
+/* Styling for overskrifter */
 h1 {
-  text-align: center;
-  color: #333;
+  text-align: center; /* Sentrer overskriften */
+  color: #333; /* Farge på overskrift */
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
+/* Responsiv design */
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column; /* Stabel sidebar og innhold vertikalt på små skjermer */
+    height: auto; /* La høyden være automatisk */
+  }
 
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
+  .sidebar {
+    width: 100%; /* Full bredde for sidebar */
+    border-right: none; /* Fjern høyre kantlinje på små skjermer */
+    border-bottom: 1px solid #ccc; /* Legg til bunnkantlinje */
+  }
 
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="date"],
-select,
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-textarea {
-  height: 80px;
-}
-
-button {
-  background: #28a745;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-right: 10px;
-}
-
-button:hover {
-  background: #218838;
-}
-
-.cancel-button {
-  background: #dc3545;
-}
-
-.cancel-button:hover {
-  background: #c82333;
+  .content-container {
+    padding: 10px; /* Mindre polstring på små skjermer */
+  }
 }

@@ -30,71 +30,67 @@ const Administration = () => {
     try {
       await deleteDoc(doc(firestore, 'users', userId));
       setUsers(users.filter((user) => user.id !== userId));
-      alert("User deleted successfully.");
+      alert("Bruker slettet med suksess.");
     } catch (error) {
       console.error('Error deleting user:', error);
-      alert("Failed to delete user.");
+      alert("Kunne ikke slette bruker.");
     }
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="loading">Laster...</div>;
   }
 
   return (
-    <div className="administration-page">
-      <h2>User Management</h2>
+    <div className="admin-container">
+      <h1 className="admin-title">Brukeradministrasjon</h1>
       {users.length > 0 ? (
-        <table className="user-table">
-          <thead>
-            <tr>
-              <th>Profile Image</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Address</th>
-              <th>Postal Code</th>
-              <th>Postal Place</th>
-              <th>City</th>
-              <th>Country</th>
-              <th>Birth Date</th>
-              <th>Gender</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.profileImage ? (
-                  <img src={user.profileImage} alt="Profile" width="50" height="50" />
-                ) : 'No Image'}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.phone}</td>
-                <td>{user.address}</td>
-                <td>{user.postalCode}</td>
-                <td>{user.postalPlace}</td>
-                <td>{user.city}</td>
-                <td>{user.country}</td>
-                <td>{user.birthDate || 'No Birth Date'}</td>
-                <td>{user.gender || 'No Gender'}</td>
-                <td>
-                  <button onClick={() => handleDelete(user.id)} className="delete-button">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="user-card-container">
+          {users.map((user) => (
+            <div key={user.id} className="user-card">
+              <div className="user-info">
+                <img
+                  src={user.profileImage || 'default-avatar.png'}
+                  alt="Profile"
+                  className="user-image"
+                />
+                <div className="user-details">
+                  <h2>{user.name}</h2>
+                  <p>Email: {user.email}</p>
+                  <p>Telefon: {user.phone}</p>
+                  <p>Adresse: {user.address}</p>
+                  <p>Postnummer: {user.postalCode}</p>
+                  <p>By: {user.city}</p>
+                  <p>Land: {user.country}</p>
+                  <p>Fødselsdato: {user.birthDate || 'Ingen fødselsdato'}</p>
+                  <p>Kjønn: {user.gender || 'Ingen kjønn'}</p>
+                  <textarea 
+                    className="description-box" 
+                    value={user.description || 'Ingen beskrivelse'} 
+                    readOnly 
+                  />
+                </div>
+              </div>
+              <button
+                onClick={() => handleDelete(user.id)}
+                className="delete-button"
+              >
+                Slett
+              </button>
+            </div>
+          ))}
+        </div>
       ) : (
-        <p>No users found.</p>
+        <p className="no-users">Ingen brukere funnet.</p>
       )}
     </div>
   );
 };
 
 export default Administration;
+
+
+
 
 
 

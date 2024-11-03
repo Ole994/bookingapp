@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; 
 import useProfile from '../../hooks/useProfile';
 import ProfileImageUpload from './ProfileImageUpload';
+import ProfileEdit from './ProfileEdit'; // Importer ProfileEdit
+import { FaEdit, FaUser } from 'react-icons/fa'; // Importer ikoner
+import './Profile.css'; // Importer CSS-filen
 
 const Profile = () => {
   const { profileData, loading } = useProfile();
   const [profileImageUrl, setProfileImageUrl] = useState(profileData?.profileImage || '');
+  const [isEditing, setIsEditing] = useState(false); // Tilstand for redigering
 
   useEffect(() => {
     if (profileData?.profileImage) {
@@ -21,38 +24,66 @@ const Profile = () => {
     return <div>No profile data found.</div>;
   }
 
+  const handleEditClick = () => {
+    setIsEditing(true); // Sett redigeringstilstand til true
+  };
+
+  const handleProfileClick = () => {
+    setIsEditing(false); // Sett redigeringstilstand til false
+  };
+
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="profile-container"> {/* Bruk klassenavn for CSS */}
       {/* Sidebar */}
-      <div style={{ width: '200px', borderRight: '1px solid #ccc', padding: '10px' }}>
+      <div className="sidebar"> {/* Bruk klassenavn for CSS */}
         <h3>Sidebar</h3>
-        <Link to="/profileEdit" style={{ textDecoration: 'none', color: 'blue' }}>
-          <i className="fas fa-edit"></i> Edit Profile
-        </Link>
+        <button onClick={handleProfileClick} className="sidebar-button">
+          <FaUser className="sidebar-icon" />
+          Vis Profil
+        </button>
+        <button onClick={handleEditClick} className="sidebar-button">
+          <FaEdit className="sidebar-icon" />
+          Rediger Profil
+        </button>
       </div>
 
-      <div style={{ marginLeft: '20px' }}>
-        <h1>Your Profile</h1>
-        <p>Name: {profileData.name}</p>
-        <p>Email: {profileData.email}</p>
-        <p>City: {profileData.city}</p>
-        <p>Country: {profileData.country}</p>
-        <p>Address: {profileData.address}</p>
-        <p>Birth Date: {profileData.birthDate}</p> {/* Legg til fødselsdato */}
-        <p>Gender: {profileData.gender}</p> {/* Legg til kjønn */}
-        <p>Description: {profileData.description}</p> {/* Legg til beskrivelse */}
+      {/* Sentralisert innhold */}
+      <div className="content-container"> {/* Bruk klassenavn for CSS */}
+        {isEditing ? (
+          <ProfileEdit onClose={handleProfileClick} />
+        ) : (
+          <div className="profile-details"> {/* Bruk klassenavn for CSS */}
+            <h1>Din Profil</h1>
+            <p>Navn: {profileData.name}</p>
+            <p>E-post: {profileData.email}</p>
+            <p>By: {profileData.city}</p>
+            <p>Land: {profileData.country}</p>
+            <p>Adresse: {profileData.address}</p>
+            <p>Fødselsdato: {profileData.birthDate}</p>
+            <p>Kjønn: {profileData.gender}</p>
+            <p>Beskrivelse: {profileData.description}</p>
 
-        {profileImageUrl && (
-          <img src={profileImageUrl} alt="Profile" style={{ width: '100px', height: '100px' }} />
+            {profileImageUrl && (
+              <img src={profileImageUrl} alt="Profile" className="profile-image" /> 
+            )}
+
+            <ProfileImageUpload setProfileImageUrl={setProfileImageUrl} />
+          </div>
         )}
-
-        <ProfileImageUpload setProfileImageUrl={setProfileImageUrl} />
       </div>
     </div>
   );
 };
 
 export default Profile;
+
+
+
+
+
+
+
+
 
 
 

@@ -1,84 +1,90 @@
-.administration-page {
-  padding: 2rem;
-  background-color: #f9f9f9;
-  max-width: 1200px; /* Setter en maksimal bredde */
-  margin: auto; /* Sentrerer innholdet */
-
-.user-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.user-table th,
-.user-table td {
-  padding: 1rem;
-  border: 1px solid #ddd;
-  text-align: left;
-}
-
-.user-table th {
-  background-color: #4caf50;
-  color: white;
-}
-
-.user-table tr:hover {
-  background-color: #f1f1f1;
-}
-
-.delete-button {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s ease; /* Legger til en overgangseffekt */
-}
-
-.delete-button:hover {
-  background-color: #c0392b;
-}
-
-/* Responsiv design */
-@media (max-width: 768px) {
-  .administration-page {
-    padding: 1rem; /* Reduserer padding på mindre skjermer */
+.admin-container {
+    padding: 2rem;
+    background-color: #f5f5f7;
+    max-width: 1200px; /* Maks bredde for større skjermer */
+    margin: auto;
   }
-
-  .user-table {
-    font-size: 14px; /* Reduserer fontstørrelsen */
+  
+  .admin-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
   }
-
-  .user-table th,
-  .user-table td {
-    padding: 0.8rem; /* Reduserer padding i tabellen */
+  
+  .loading {
+    text-align: center;
+    font-size: 1.5rem;
   }
-
+  
+  .user-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Justert for mindre skjermer */
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .user-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    transition: box-shadow 0.3s;
+    text-align: center;
+  }
+  
+  .user-card:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .user-image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1rem;
+  }
+  
+  .user-details {
+    margin: 0.5rem 0;
+  }
+  
+  .description-box {
+    width: 90%; /* Bredde for tekstboks */
+    height: 100px; /* Høyde for tekstboks */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+    resize: none; /* Hindrer at brukeren endrer størrelse på tekstboksen */
+  }
+  
   .delete-button {
-    padding: 0.4rem 0.8rem; /* Reduserer padding på knappen */
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
   }
-}
-
-@media (max-width: 480px) {
-  .user-table {
-    font-size: 12px; /* Endrer fontstørrelsen for veldig små skjermer */
+  
+  .delete-button:hover {
+    background-color: #c0392b;
   }
-
-  .user-table th,
-  .user-table td {
-    padding: 0.6rem; /* Ytterligere redusert padding */
+  
+  .no-users {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
   }
-
-  .delete-button {
-    padding: 0.3rem 0.6rem; /* Ytterligere redusert padding på knappen */
-  }
-
-  /* Gjør tabellen horisontal rullbar på små skjermer */
-  .administration-page {
-    overflow-x: auto; /* Lar innholdet rulle horisontalt */
-  }
-}
-}
+  
+  
+  
+  
