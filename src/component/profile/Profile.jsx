@@ -3,7 +3,7 @@ import useProfile from '../../hooks/useProfile';
 import ProfileImageUpload from './ProfileImageUpload';
 import ProfileEdit from './ProfileEdit'; // Importer ProfileEdit
 import { FaEdit, FaUser } from 'react-icons/fa'; // Importer ikoner
-import './Profile.css'; // Importer CSS-filen
+import './profile.css'; // Importer CSS-filen
 
 const Profile = () => {
   const { profileData, loading } = useProfile();
