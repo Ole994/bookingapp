@@ -57,20 +57,17 @@ const Administration = () => {
               <th>Postal Place</th>
               <th>City</th>
               <th>Country</th>
-              <th>Birth Date</th> {/* Nytt felt for fødselsdato */}
+              <th>Birth Date</th>
+              <th>Gender</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
-                <td>
-                  {user.profileImage ? (
-                    <img src={user.profileImage} alt="Profile" width="50" height="50" />
-                  ) : (
-                    'No Image'
-                  )}
-                </td>
+                <td>{user.profileImage ? (
+                  <img src={user.profileImage} alt="Profile" width="50" height="50" />
+                ) : 'No Image'}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
@@ -79,7 +76,8 @@ const Administration = () => {
                 <td>{user.postalPlace}</td>
                 <td>{user.city}</td>
                 <td>{user.country}</td>
-                <td>{user.birthDate || 'No Birth Date'}</td> {/* Viser fødselsdato, hvis tilgjengelig */}
+                <td>{user.birthDate || 'No Birth Date'}</td>
+                <td>{user.gender || 'No Gender'}</td>
                 <td>
                   <button onClick={() => handleDelete(user.id)} className="delete-button">
                     Delete
@@ -97,4 +95,7 @@ const Administration = () => {
 };
 
 export default Administration;
+
+
+
 

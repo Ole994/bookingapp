@@ -6,7 +6,7 @@
   padding: 2rem;
   background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
   color: #f0f0f0;
-}
+
 
 .signup-box {
   width: 100%; /* Fyller 90% av skjermbredden på alle enheter */
@@ -172,3 +172,4 @@
   background-color: #3a3a3a;
 }
 
+}

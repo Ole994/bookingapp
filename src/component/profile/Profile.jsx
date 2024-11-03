@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Importer Link for navigering
+import { Link } from 'react-router-dom'; 
 import useProfile from '../../hooks/useProfile';
 import ProfileImageUpload from './ProfileImageUpload';
 
@@ -38,7 +38,9 @@ const Profile = () => {
         <p>City: {profileData.city}</p>
         <p>Country: {profileData.country}</p>
         <p>Address: {profileData.address}</p>
-        <p>Birth Date: {profileData.birthDate || 'No Birth Date'}</p> {/* Nytt felt for fødselsdato */}
+        <p>Birth Date: {profileData.birthDate}</p> {/* Legg til fødselsdato */}
+        <p>Gender: {profileData.gender}</p> {/* Legg til kjønn */}
+        <p>Description: {profileData.description}</p> {/* Legg til beskrivelse */}
 
         {profileImageUrl && (
           <img src={profileImageUrl} alt="Profile" style={{ width: '100px', height: '100px' }} />

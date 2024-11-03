@@ -23,6 +23,7 @@ const SignUp = () => {
     password: '',
     confirmPassword: '',
     birthDate: '', // Nytt felt for fødselsdato
+    gender: '', // Nytt felt for kjønn
   });
   const [profileImage, setProfileImage] = useState(null);
   const [errors, setErrors] = useState({});
@@ -88,6 +89,7 @@ const SignUp = () => {
         country: formData.country,
         profileImage: profileImageUrl, // Lagre URL for profilbilde
         birthDate: formData.birthDate, // Legger til fødselsdato
+        gender: formData.gender, // Legger til kjønn
       });
 
       setSuccess('User registered successfully!');
@@ -141,7 +143,6 @@ const SignUp = () => {
             />
             {errors.phone && <div className="input-error">{errors.phone}</div>}
           </div>
-
 
           <div className="input-group">
             <input
@@ -238,6 +239,22 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
+            <label htmlFor="gender">Kjønn:</label>
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Velg Kjønn</option>
+              <option value="Male">Mann</option>
+              <option value="Female">Kvinne</option>
+              <option value="Other">Annet</option>
+            </select>
+            {errors.gender && <div className="input-error">{errors.gender}</div>}
+          </div>
+
+          <div className="input-group">
             <label htmlFor="profileImage" className="file-label">
               Profile Image (optional):
             </label>
@@ -248,8 +265,6 @@ const SignUp = () => {
               onChange={handleImageChange}
             />
           </div>
-
-     
 
           <button type="submit" className="submit-button">Sign Up</button>
         </form>

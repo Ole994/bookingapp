@@ -36,8 +36,10 @@ const storage = getStorage(app);
 // Initialiser Analytics
 const analytics = getAnalytics(app);
 
+const db = getFirestore(app);
+
 // Eksporter nødvendige moduler
-export { firestore, auth, storage, analytics };
+export { firestore, auth, storage, analytics, db };
 
 
 

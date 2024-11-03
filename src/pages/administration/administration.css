@@ -1,7 +1,8 @@
 .administration-page {
   padding: 2rem;
   background-color: #f9f9f9;
-}
+  max-width: 1200px; /* Setter en maksimal bredde */
+  margin: auto; /* Sentrerer innholdet */
 
 .user-table {
   width: 100%;
@@ -34,9 +35,50 @@
   padding: 0.5rem 1rem;
   cursor: pointer;
   border-radius: 4px;
+  transition: background-color 0.3s ease; /* Legger til en overgangseffekt */
 }
 
 .delete-button:hover {
   background-color: #c0392b;
 }
-  
+
+/* Responsiv design */
+@media (max-width: 768px) {
+  .administration-page {
+    padding: 1rem; /* Reduserer padding på mindre skjermer */
+  }
+
+  .user-table {
+    font-size: 14px; /* Reduserer fontstørrelsen */
+  }
+
+  .user-table th,
+  .user-table td {
+    padding: 0.8rem; /* Reduserer padding i tabellen */
+  }
+
+  .delete-button {
+    padding: 0.4rem 0.8rem; /* Reduserer padding på knappen */
+  }
+}
+
+@media (max-width: 480px) {
+  .user-table {
+    font-size: 12px; /* Endrer fontstørrelsen for veldig små skjermer */
+  }
+
+  .user-table th,
+  .user-table td {
+    padding: 0.6rem; /* Ytterligere redusert padding */
+  }
+
+  .delete-button {
+    padding: 0.3rem 0.6rem; /* Ytterligere redusert padding på knappen */
+  }
+
+  /* Gjør tabellen horisontal rullbar på små skjermer */
+  .administration-page {
+    overflow-x: auto; /* Lar innholdet rulle horisontalt */
+  }
+}
+}
