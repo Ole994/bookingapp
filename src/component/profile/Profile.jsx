@@ -38,6 +38,7 @@ const Profile = () => {
         <p>City: {profileData.city}</p>
         <p>Country: {profileData.country}</p>
         <p>Address: {profileData.address}</p>
+        <p>Birth Date: {profileData.birthDate || 'No Birth Date'}</p> {/* Nytt felt for fødselsdato */}
 
         {profileImageUrl && (
           <img src={profileImageUrl} alt="Profile" style={{ width: '100px', height: '100px' }} />
@@ -50,6 +51,7 @@ const Profile = () => {
 };
 
 export default Profile;
+
 
 
 

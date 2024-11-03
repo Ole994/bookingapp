@@ -1,4 +1,3 @@
-// src/component/signup/SignUp.jsx
 import { useState } from 'react';
 import { auth, firestore, storage } from '../../utils/firebaseConfig'; // Importer nødvendige moduler
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -23,6 +22,7 @@ const SignUp = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    birthDate: '', // Nytt felt for fødselsdato
   });
   const [profileImage, setProfileImage] = useState(null);
   const [errors, setErrors] = useState({});
@@ -87,6 +87,7 @@ const SignUp = () => {
         city: formData.city,
         country: formData.country,
         profileImage: profileImageUrl, // Lagre URL for profilbilde
+        birthDate: formData.birthDate, // Legger til fødselsdato
       });
 
       setSuccess('User registered successfully!');
@@ -111,7 +112,7 @@ const SignUp = () => {
   return (
     <div className="signup-page">
       <div className="signup-box">
-        <h2>Create Account</h2>
+        <h2>Opprett bruker</h2>
 
         {error && <p className="message error">{error}</p>}
         {success && <p className="message success">{success}</p>}
@@ -120,7 +121,7 @@ const SignUp = () => {
           <div className="input-group">
             <input
               type="text"
-              placeholder="Name"
+              placeholder="Navn"
               name="name"
               value={formData.name}
               onChange={handleChange}
@@ -132,7 +133,7 @@ const SignUp = () => {
           <div className="input-group">
             <input
               type="tel"
-              placeholder="Phone"
+              placeholder="Telefon nummer"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
@@ -141,10 +142,23 @@ const SignUp = () => {
             {errors.phone && <div className="input-error">{errors.phone}</div>}
           </div>
 
+
+          <div className="input-group">
+            <input
+              type="date"
+              placeholder="Fødselsdato"
+              name="birthDate"
+              value={formData.birthDate}
+              onChange={handleChange}
+              required
+            />
+            {errors.birthDate && <div className="input-error">{errors.birthDate}</div>}
+          </div>
+
           <div className="input-group">
             <input
               type="text"
-              placeholder="Address"
+              placeholder="Adresse"
               name="address"
               value={formData.address}
               onChange={handleChange}
@@ -156,7 +170,7 @@ const SignUp = () => {
           <div className="input-group">
             <input
               type="text"
-              placeholder="Postal Code"
+              placeholder="Postnummer"
               name="postalCode"
               value={formData.postalCode}
               onChange={handleChange}
@@ -168,7 +182,7 @@ const SignUp = () => {
           <div className="input-group">
             <input
               type="text"
-              placeholder="Postal Place"
+              placeholder="Postadresse"
               name="postalPlace"
               value={formData.postalPlace}
               onChange={handleChange}
@@ -190,7 +204,7 @@ const SignUp = () => {
           <div className="input-group">
             <input
               type="email"
-              placeholder="Email"
+              placeholder="E-mail"
               name="email"
               value={formData.email}
               onChange={handleChange}
@@ -202,7 +216,7 @@ const SignUp = () => {
           <div className="input-group">
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Passord"
               name="password"
               value={formData.password}
               onChange={handleChange}
@@ -214,7 +228,7 @@ const SignUp = () => {
           <div className="input-group">
             <input
               type="password"
-              placeholder="Confirm Password"
+              placeholder="Bekreft passord"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
@@ -234,6 +248,8 @@ const SignUp = () => {
               onChange={handleImageChange}
             />
           </div>
+
+     
 
           <button type="submit" className="submit-button">Sign Up</button>
         </form>

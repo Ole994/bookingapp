@@ -42,7 +42,7 @@ const CountryAutocomplete = ({ onCountrySelect }) => {
     <div className="autocomplete">
       <input
         type="text"
-        placeholder="Enter country"
+        placeholder="Land"
         value={query}
         onChange={handleInputChange}
         className="autocomplete-input"

@@ -1,4 +1,3 @@
-// src/pages/Administration/Administration.jsx
 import { useEffect, useState } from 'react';
 import { firestore } from '../../utils/firebaseConfig';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
@@ -58,6 +57,7 @@ const Administration = () => {
               <th>Postal Place</th>
               <th>City</th>
               <th>Country</th>
+              <th>Birth Date</th> {/* Nytt felt for fødselsdato */}
               <th>Actions</th>
             </tr>
           </thead>
@@ -79,6 +79,7 @@ const Administration = () => {
                 <td>{user.postalPlace}</td>
                 <td>{user.city}</td>
                 <td>{user.country}</td>
+                <td>{user.birthDate || 'No Birth Date'}</td> {/* Viser fødselsdato, hvis tilgjengelig */}
                 <td>
                   <button onClick={() => handleDelete(user.id)} className="delete-button">
                     Delete
@@ -96,3 +97,4 @@ const Administration = () => {
 };
 
 export default Administration;
+

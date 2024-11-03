@@ -45,7 +45,7 @@ const CityAutoComplete = ({ onCitySelect }) => {
     <div className="autocomplete">
       <input
         type="text"
-        placeholder="Enter city"
+        placeholder="By"
         value={query}
         onChange={handleInputChange}
         className="autocomplete-input"

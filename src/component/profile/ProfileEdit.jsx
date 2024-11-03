@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import useProfile from '../../hooks/useProfile';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Importer useNavigate i stedet for useHistory
 import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../../utils/firebaseConfig'; // Juster importen etter din struktur
+import { firestore } from '../../utils/firebaseConfig'; // Sørg for at du bruker riktig import
 
 const ProfileEdit = () => {
   const { profileData, loading } = useProfile();
   const [formData, setFormData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate(); // Bruk useNavigate
 
   useEffect(() => {
     if (profileData) {
@@ -18,6 +18,7 @@ const ProfileEdit = () => {
         city: profileData.city,
         country: profileData.country,
         address: profileData.address,
+        birthDate: profileData.birthDate || '', // La til fødselsdato
         uid: profileData.uid, // Husk å inkludere uid for oppdatering
       });
     }
@@ -30,11 +31,11 @@ const ProfileEdit = () => {
 
   const handleSave = async () => {
     try {
-      const userRef = doc(db, 'users', formData.uid); // Referanse til brukerens dokument i Firestore
+      const userRef = doc(firestore, 'users', formData.uid); // Referanse til brukerens dokument i Firestore
       await updateDoc(userRef, formData); // Oppdater dokumentet med ny informasjon
       console.log('Saved:', formData);
       setIsEditing(false); // Lås opp for redigering
-      history.push('/profile'); // Naviger tilbake til profil
+      navigate('/profile'); // Naviger tilbake til profil
     } catch (error) {
       console.error('Error saving profile:', error);
     }
@@ -97,15 +98,28 @@ const ProfileEdit = () => {
           readOnly={!isEditing}
         />
       </div>
+      <div>
+        <label>Birth Date:</label>
+        <input
+          type="date"
+          name="birthDate"
+          value={formData.birthDate}
+          onChange={handleChange}
+          readOnly={!isEditing}
+        />
+      </div>
 
       <button onClick={() => setIsEditing(true)}>Edit</button>
       <button onClick={handleSave} disabled={!isEditing}>Save</button>
-      <button onClick={() => history.push('/profile')}>Cancel</button>
+      <button onClick={() => navigate('/profile')}>Cancel</button> {/* Endret til navigate */}
     </div>
   );
 };
 
 export default ProfileEdit;
+
+
+
 
 
 
