@@ -15,7 +15,11 @@ const Administration = lazy(() => import('./pages/administration/Administration'
 const Home = lazy(() => import('./pages/home/Home'));
 const SignUp = lazy(() => import('./pages/signup/SignUp'));
 const DeleteAccount = lazy(() => import('./component/deleteAccount/DeleteAccount'));
-import ProfileEdit from './component/profile/ProfileEdit';
+const ProfileEdit = lazy(() => import('./component/profile/ProfileEdit'));
+const TestUserProfile = lazy(() => import('./component/profile/TestUserProfile'));
+
+
+
 
 const AppRouter = () => {
   return (
@@ -30,6 +34,7 @@ const AppRouter = () => {
         <Route path="/logout" element={<Logout />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profileEdit" element={<ProfileEdit />} />
+        <Route path="/testUserProfile" element={<TestUserProfile />} />
         
         {/* Protected Administration route */}
         <Route

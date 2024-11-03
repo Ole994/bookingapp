@@ -1,33 +1,47 @@
-// src/hooks/useProfile.js
 import { useState, useEffect } from 'react';
-import { firestore } from '../utils/firebaseConfig';
-import { doc, getDoc } from 'firebase/firestore';
-import useAuth from './useAuth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 const useProfile = () => {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { currentUser } = useAuth();
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("User is logged in:", user);
+        setCurrentUser(user);
+      } else {
+        console.log("No user is logged in.");
+        setCurrentUser(null);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     const fetchProfileData = async () => {
       if (!currentUser) {
-        console.log("No current user found, setting loading to false."); // Logging if no user is found
+        console.error("No current user found.");
         setLoading(false);
         return;
       }
 
-      console.log("Current User UID:", currentUser.uid); // Logg UID-en her
+      const db = getFirestore();
+      const userDocRef = doc(db, 'users', currentUser.uid);
 
       try {
-        const userDocRef = doc(firestore, 'users', currentUser.uid);
+        console.log("Fetching document for UID:", currentUser.uid);
         const userDoc = await getDoc(userDocRef);
-
         if (userDoc.exists()) {
+          console.log("User document found:", userDoc.data());
           setProfileData(userDoc.data());
-          console.log("Profile data loaded:", userDoc.data()); // Logg profildata ved henting
         } else {
-          console.error("User document does not exist.");
+          console.error("User document does not exist. UID:", currentUser.uid);
         }
       } catch (error) {
         console.error("Error fetching user profile:", error);
@@ -36,11 +50,12 @@ const useProfile = () => {
       }
     };
 
-    fetchProfileData();
+    if (currentUser) {
+      fetchProfileData();
+    }
   }, [currentUser]);
 
   return { profileData, loading };
 };
 
 export default useProfile;
-
