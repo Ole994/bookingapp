@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import useProfile from '../../hooks/useProfile';
-import { useNavigate } from 'react-router-dom'; // Bruker useNavigate i stedet for useHistory
 import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../../utils/firebaseConfig'; // Sørg for at db er eksportert riktig
-import "./profile.css"
+import { db } from '../../utils/firebaseConfig'; 
+import PropTypes from 'prop-types';
+import './profile.css'; 
 
-const ProfileEdit = () => {
-  const { profileData, loading } = useProfile();
+const ProfileEdit = ({ onClose, profileData, profileImageUrl }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,20 +13,20 @@ const ProfileEdit = () => {
     address: '',
     uid: '',
     birthDate: '',
+    gender: '',
   });
-  const [isEditing, setIsEditing] = useState(false);
-  const navigate = useNavigate(); // Bruker useNavigate
 
   useEffect(() => {
     if (profileData) {
       setFormData({
-        name: profileData.name || '', // Gi en tom streng som fallback
+        name: profileData.name || '',
         email: profileData.email || '',
         city: profileData.city || '',
         country: profileData.country || '',
         address: profileData.address || '',
         uid: profileData.uid || '',
         birthDate: profileData.birthDate || '',
+        gender: profileData.gender || '',
       });
     }
   }, [profileData]);
@@ -43,20 +41,22 @@ const ProfileEdit = () => {
       const userRef = doc(db, 'users', formData.uid);
       await updateDoc(userRef, formData);
       console.log('Saved:', formData);
-      setIsEditing(false);
-      navigate('/profile'); // Naviger tilbake til profil
+      onClose(); // Lukk redigeringsvinduet
     } catch (error) {
       console.error('Error saving profile:', error);
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="profile-edit-container">
       <h1>Rediger Profil</h1>
+
+      {/* Vise profilbilde */}
+      {profileImageUrl && (
+        <img src={profileImageUrl} alt="Profile" className="profile-image" />
+      )}
+
+      {/* Felter for redigering */}
       <div className="profile-row">
         <label className="profile-label">Navn:</label>
         <input
@@ -64,7 +64,6 @@ const ProfileEdit = () => {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          readOnly={!isEditing}
           className="profile-input"
         />
       </div>
@@ -75,7 +74,6 @@ const ProfileEdit = () => {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          readOnly={!isEditing}
           className="profile-input"
         />
       </div>
@@ -86,7 +84,6 @@ const ProfileEdit = () => {
           name="city"
           value={formData.city}
           onChange={handleChange}
-          readOnly={!isEditing}
           className="profile-input"
         />
       </div>
@@ -97,7 +94,6 @@ const ProfileEdit = () => {
           name="country"
           value={formData.country}
           onChange={handleChange}
-          readOnly={!isEditing}
           className="profile-input"
         />
       </div>
@@ -108,7 +104,6 @@ const ProfileEdit = () => {
           name="address"
           value={formData.address}
           onChange={handleChange}
-          readOnly={!isEditing}
           className="profile-input"
         />
       </div>
@@ -119,21 +114,52 @@ const ProfileEdit = () => {
           name="birthDate"
           value={formData.birthDate}
           onChange={handleChange}
-          readOnly={!isEditing}
+          className="profile-input"
+        />
+      </div>
+      <div className="profile-row">
+        <label className="profile-label">Kjønn:</label>
+        <input
+          type="text"
+          name="gender"
+          value={formData.gender}
+          onChange={handleChange}
           className="profile-input"
         />
       </div>
 
       <div className="button-group">
-        <button className="edit-button" onClick={() => setIsEditing(true)}>Rediger</button>
-        <button className="save-button" onClick={handleSave} disabled={!isEditing}>Lagre</button>
-        <button className="cancel-button" onClick={() => navigate('/profile')}>Avbryt</button>
+        <button className="save-button" onClick={handleSave}>Lagre</button>
+        <button className="cancel-button" onClick={onClose}>Avbryt</button>
       </div>
     </div>
   );
 };
 
+// Props validering
+ProfileEdit.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  profileData: PropTypes.object.isRequired,
+  profileImageUrl: PropTypes.string.isRequired,
+};
+
 export default ProfileEdit;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

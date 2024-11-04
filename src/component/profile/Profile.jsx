@@ -28,16 +28,15 @@ const Profile = () => {
     setIsEditing(true); // Sett redigeringstilstand til true
   };
 
-  const handleProfileClick = () => {
+  const handleCloseEdit = () => {
     setIsEditing(false); // Sett redigeringstilstand til false
   };
 
   return (
-    <div className="profile-container"> {/* Bruk klassenavn for CSS */}
-      {/* Sidebar */}
-      <div className="sidebar"> {/* Bruk klassenavn for CSS */}
+    <div className="profile-container">
+      <div className="sidebar">
         <h3>Sidebar</h3>
-        <button onClick={handleProfileClick} className="sidebar-button">
+        <button onClick={handleCloseEdit} className="sidebar-button">
           <FaUser className="sidebar-icon" />
           Vis Profil
         </button>
@@ -47,12 +46,15 @@ const Profile = () => {
         </button>
       </div>
 
-      {/* Sentralisert innhold */}
-      <div className="content-container"> {/* Bruk klassenavn for CSS */}
+      <div className={`content-container ${isEditing ? 'blurred' : ''}`}>
         {isEditing ? (
-          <ProfileEdit onClose={handleProfileClick} />
+          <ProfileEdit 
+            onClose={handleCloseEdit} 
+            profileData={profileData} 
+            profileImageUrl={profileImageUrl} 
+          />
         ) : (
-          <div className="profile-details"> {/* Bruk klassenavn for CSS */}
+          <div className="profile-details">
             <h1>Din Profil</h1>
             <p>Navn: {profileData.name}</p>
             <p>E-post: {profileData.email}</p>
@@ -64,7 +66,7 @@ const Profile = () => {
             <p>Beskrivelse: {profileData.description}</p>
 
             {profileImageUrl && (
-              <img src={profileImageUrl} alt="Profile" className="profile-image" /> 
+              <img src={profileImageUrl} alt="Profile" className="profile-image" />
             )}
 
             <ProfileImageUpload setProfileImageUrl={setProfileImageUrl} />
