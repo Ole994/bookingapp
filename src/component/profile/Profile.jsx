@@ -83,7 +83,7 @@ const Profile = () => {
             <p>{profileData.postalCode}</p>
           </div>
           <div className="grid-main-content">
-            <h3>postaddressen:</h3>
+            <h3>postaddresse:</h3>
             <p>{profileData.postalPlace}</p>
           </div>
           <div className="grid-main-content">
