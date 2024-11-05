@@ -133,6 +133,7 @@ const ProfileEdit = ({ onClose, profileData, profileImageUrl }) => {
   className="profile-input"
 />
       </div>
+
       <div className="profile-row">
         <label className="profile-label">addresse:</label>
         <input
@@ -143,6 +144,7 @@ const ProfileEdit = ({ onClose, profileData, profileImageUrl }) => {
   className="profile-input"
 />
       </div>
+
       <div className="profile-row">
         <label className="profile-label">Postnummer:</label>
         <input
@@ -153,22 +155,72 @@ const ProfileEdit = ({ onClose, profileData, profileImageUrl }) => {
           className="profile-input"
         />
       </div>
+
+
       <div className="profile-row">
-        <label className="profile-label">By:</label>
+        <label className="profile-label">Post sted:</label>
         <input
-          type="date"
-          name="birthDate"
+          type="text"
+          name="place"
+          value={formData.postalPlace}
+          onChange={handleChange}
+          className="profile-input"
+        />
+      </div>
+
+      
+      <div className="profile-row">
+        <label className="profile-label">Land:</label>
+        <input
+          type="text"
+          name="Country"
+          value={formData.country}
+          onChange={handleChange}
+          className="profile-input"
+        />
+      </div>
+
+
+      <div className="profile-row">
+        <label className="profile-label">by:</label>
+        <input
+          type="text"
+          name="city"
           value={formData.city}
           onChange={handleChange}
           className="profile-input"
         />
       </div>
+
+
+      <div className="profile-row">
+  <label className="profile-label">Bursdag:</label>
+  <input
+    type="date" 
+    name="birthDate" 
+    value={formData.birthDate} 
+    onChange={handleChange} // 
+    className="profile-input"
+  />
+</div>
+
+    
       <div className="profile-row">
         <label className="profile-label">Kjønn:</label>
         <input
           type="text"
           name="gender"
           value={formData.gender}
+          onChange={handleChange}
+          className="profile-input"
+        />
+      </div>
+
+      <div className="profile-row">
+        <label className="profile-label">Beskrivelse:</label>
+        <textarea
+          name="description"
+          value={formData.description}
           onChange={handleChange}
           className="profile-input"
         />

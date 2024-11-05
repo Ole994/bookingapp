@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import useProfile from '../../hooks/useProfile';
 import ProfileImageUpload from './ProfileImageUpload';
-import ProfileEdit from './ProfileEdit'; // Importer ProfileEdit
-import { FaEdit, FaUser } from 'react-icons/fa'; // Importer ikoner
-import './profile.css'; // Importer CSS-filen
+import ProfileEdit from './ProfileEdit'; 
+import { FaEdit, FaUser } from 'react-icons/fa'; 
+import './profile.css'; 
+import About from '../about/About';
 
 const Profile = () => {
   const { profileData, loading } = useProfile();
   const [profileImageUrl, setProfileImageUrl] = useState(profileData?.profileImage || '');
-  const [isEditing, setIsEditing] = useState(false); // Tilstand for redigering
+  const [isEditing, setIsEditing] = useState(false); // 
 
   useEffect(() => {
     if (profileData?.profileImage) {
@@ -25,11 +26,11 @@ const Profile = () => {
   }
 
   const handleEditClick = () => {
-    setIsEditing(true); // Sett redigeringstilstand til true
+    setIsEditing(true); // 
   };
 
   const handleCloseEdit = () => {
-    setIsEditing(false); // Sett redigeringstilstand til false
+    setIsEditing(false); 
   };
 
   return (
@@ -102,6 +103,7 @@ const Profile = () => {
             <h3>Kjønn:</h3>
             <p>{profileData.gender}</p>
           </div>
+          <About/>
         </div>
 
         <ProfileImageUpload setProfileImageUrl={setProfileImageUrl} />
