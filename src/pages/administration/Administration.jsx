@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { firestore } from '../../utils/firebaseConfig';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import './Administration.css';
+import './administration.css';
 
 const Administration = () => {
   const [users, setUsers] = useState([]);

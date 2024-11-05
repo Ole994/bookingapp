@@ -33,51 +33,89 @@ const Profile = () => {
   };
 
   return (
-    <div className="profile-container">
-      <div className="sidebar">
-        <h3>Sidebar</h3>
-        <button onClick={handleCloseEdit} className="sidebar-button">
-          <FaUser className="sidebar-icon" />
-          Vis Profil
-        </button>
-        <button onClick={handleEditClick} className="sidebar-button">
-          <FaEdit className="sidebar-icon" />
-          Rediger Profil
-        </button>
-      </div>
+    <div className="profile-wrapper">
+  <div className="sidebar">
+    <button onClick={handleCloseEdit} className="sidebar-button">
+      <FaUser className="sidebar-icon" />
+      Vis Profil
+    </button>
+    <button onClick={handleEditClick} className="sidebar-button">
+      <FaEdit className="sidebar-icon" />
+      Rediger Profil
+    </button>
+  </div>
 
-      <div className={`content-container ${isEditing ? 'blurred' : ''}`}>
-        {isEditing ? (
-          <ProfileEdit 
-            onClose={handleCloseEdit} 
-            profileData={profileData} 
-            profileImageUrl={profileImageUrl} 
-          />
-        ) : (
-          <div className="profile-details">
-            <h1>Din Profil</h1>
-            <p>Navn: {profileData.name}</p>
-            <p>E-post: {profileData.email}</p>
-            <p>By: {profileData.city}</p>
-            <p>Land: {profileData.country}</p>
-            <p>Adresse: {profileData.address}</p>
-            <p>Fødselsdato: {profileData.birthDate}</p>
-            <p>Kjønn: {profileData.gender}</p>
-            <p>Beskrivelse: {profileData.description}</p>
-
-            {profileImageUrl && (
-              <img src={profileImageUrl} alt="Profile" className="profile-image" />
-            )}
-
-            <ProfileImageUpload setProfileImageUrl={setProfileImageUrl} />
+  <div className="profile-content-container">
+    {isEditing ? (
+      <ProfileEdit
+        onClose={handleCloseEdit}
+        profileData={profileData}
+        profileImageUrl={profileImageUrl}
+      />
+    ) : (
+      <div className="profile-view">
+        <div className="profile-img-div">
+          {profileImageUrl && (
+            <img src={profileImageUrl} alt="Profile" className="profile-img" />
+          )}
+        </div>
+<h1>Din Profil</h1>
+        <div className="profile-grid-content">
+          
+          <div className="grid-main-content">
+            <h3>Navn:</h3>
+            <p>{profileData.name}</p>
           </div>
-        )}
+          <div className="grid-main-content">
+            <h3>email:</h3>
+            <p>{profileData.email}</p>
+          </div>
+          <div className="grid-main-content">
+            <h3>Telefonnummer:</h3>
+            <p>{profileData.phone}</p>
+          </div>
+          <div className="grid-main-content">
+            <h3>addresse:</h3>
+            <p>{profileData.address}</p>
+          </div>
+          <div className="grid-main-content">
+            <h3>Postnummer:</h3>
+            <p>{profileData.postalCode}</p>
+          </div>
+          <div className="grid-main-content">
+            <h3>postaddressen:</h3>
+            <p>{profileData.postalPlace}</p>
+          </div>
+          <div className="grid-main-content">
+            <h3>By:</h3>
+            <p>{profileData.city}</p>
+          </div>
+          <div className="grid-main-content">
+            <h3>Land:</h3>
+            <p>{profileData.country}</p>
+          </div>
+          <div className="grid-main-content">
+            <h3>Bursdag:</h3>
+            <p>{profileData.birthDate}</p>
+          </div>
+          <div className="grid-main-content">
+            <h3>Kjønn:</h3>
+            <p>{profileData.gender}</p>
+          </div>
+        </div>
+
+        <ProfileImageUpload setProfileImageUrl={setProfileImageUrl} />
       </div>
-    </div>
+    )}
+  </div>
+</div>
+
   );
 };
 
 export default Profile;
+
+
 
 
 
